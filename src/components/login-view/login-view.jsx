@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+
+
 export function LoginView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -24,7 +26,7 @@ export function LoginView(props) {
         <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
       </label>
       <button type="submit" onClick={handleSubmit}>Login</button>
-      <p>Don't have an account? <a href="">Register here</a>.</p>
+      <button type="submit" onClick={() => console.log("register")}>Sign up</button>
     </form>
   );
 }

@@ -33,7 +33,7 @@ export function RegistrationView(props) {
         Birthday:
         <input type="date" value={birthday} onChange={e => setEmail(e.target.value)} />
       </label>
-      <button type="submit" onClick={handleSubmit}>Register</button>
+      <button type="submit" onClick={handleSubmit}>Sign up</button>
     </form>
   );
 }

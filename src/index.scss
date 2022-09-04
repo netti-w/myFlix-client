@@ -1,5 +1,105 @@
-$color: steelblue;
+//Custom colours
+$myFlixRed: #e63946;
+$myFlixWhite: #f1faee;
+$myFlixLightBlue: #a8dadc;
+$myFlixBlue: #457b9d;
+$myFlixDarkBlue: #1d3557;
+$myFlixRed-darker: darken($myFlixRed, 15%);
+$myFlixRed-lighter: lighten($myFlixRed, 15%);
 
-.my-flix {
-    color: $color;
+//Custom fonts
+.bg-dark-text {
+    color: $myFlixWhite;
 }
+
+.bg-light-text {
+    color: $myFlixDarkBlue;
+}
+
+// Background color --- 
+body,
+html {
+    background: $myFlixDarkBlue;
+}
+
+.app-container {
+    width: 100%;
+    background: $myFlixDarkBlue;
+}
+
+.movieViewContainer {
+    background: $myFlixBlue;
+}
+
+
+// --- TEST - applying classNames --- 
+.button-primary {
+    background-color: $myFlixRed  !important;
+    border-color: $myFlixRed  !important;
+    box-shadow: 0px 2xpx $myFlixRed-darker  !important;
+
+    &:hover {
+        transition: 0.2s 0.1s !important;
+        opacity: 0.8 !important;
+    }
+}
+
+.button-secondary {
+    background-color: white !important;
+    border-color: $myFlixBlue  !important;
+    color: $myFlixBlue  !important;
+
+    &:hover {
+        background-color: $myFlixLightBlue  !important;
+        color: $myFlixDarkBlue  !important;
+        transition: 0.2s 0.1s !important;
+    }
+}
+
+.link-primary {
+    color: $myFlixRed;
+    font-style: bold;
+
+    &:hover,
+    :active {
+        transition: 0.2s 0.1s !important;
+        opacity: 0.8 !important;
+    }
+}
+
+.link-secondary {
+    color: $myFlixBlue;
+    font-style: bold;
+
+    &:hover,
+    :active {
+        transition: 0.2s 0.1s !important;
+        opacity: 0.8 !important;
+    }
+}
+
+.nav {
+    background-color: $myFlixDarkBlue  !important;
+
+    .nav-item {
+        background-color: $myFlixDarkBlue  !important;
+    }
+
+    ;
+
+    .nav-link {
+        color: $myFlixWhite  !important;
+    }
+
+    ;
+}
+
+
+// --- TEST - Overwriting Bootstrap theme colors --- Does not work!
+// $theme-colors: (
+//     "primary": #e63946,
+//     "ssecondary": #457b9d
+// );
+
+// // Bootstrap and its default variables
+// @import "../node_modules/bootstrap/scss/bootstrap";

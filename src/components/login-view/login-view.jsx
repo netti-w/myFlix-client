@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { Container, CardGroup, Card, Form, Row, Col, Button } from 'react-bootstrap';
+// import { Button } from '../button/button';
 
 
 export function LoginView(props) {
@@ -16,18 +18,45 @@ export function LoginView(props) {
   };
 
   return (
-    <form>
-      <label>
-        Username:
-        <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-      </label>
-      <label>
-        Password:
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      </label>
-      <button type="submit" onClick={handleSubmit}>Login</button>
-      <button type="submit" onClick={() => console.log("register")}>Sign up</button>
-    </form>
+    <Container>
+      <Row>
+        <Col></Col>
+        <Col lg={5} md={5} sm={9}>
+          <CardGroup>
+            <Card style={{ marginTop: 100, marginBottom: 50 }}>
+              <Card.Body>
+                <Card.Title style={{ textAlign: 'center' }}>Welcome back. Log in here.</Card.Title>
+                <Form>
+                  <Form.Group className="mb-3" controlId="formUsername">
+                    <Form.Label>Username:</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={username}
+                      onChange={e => setUsername(e.target.value)}
+                      placeholder="Enter a username" />
+                  </Form.Group>
+                  <Form.Group controlId="formPassword">
+                    <Form.Label>Password:</Form.Label>
+                    <Form.Control
+                      type="password"
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
+                      placeholder="Enter a password" />
+                  </Form.Group>
+                  <Button style={{ marginTop: 20, marginRight: 20 }} variant="primary" className="button-primary px-5" type="submit" onClick={handleSubmit}>
+                    Log in
+                  </Button>
+                  <Button style={{ marginTop: 20 }} variant="outline-primary" className="button-secondary px-4" type="submit" onClick={handleSubmit}>
+                    Sign up
+                  </Button>
+                </Form>
+              </Card.Body>
+            </Card>
+          </CardGroup>
+        </Col>
+        <Col></Col>
+      </Row>
+    </Container>
   );
 }
 

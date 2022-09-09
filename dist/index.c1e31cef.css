@@ -1,0 +1,79 @@
+.movie-poster {
+  src-max-height: 300px !important;
+}
+
+
+
+.bg-dark-text {
+  color: #f1faee;
+}
+
+.bg-light-text {
+  color: #1d3557;
+}
+
+body,
+html {
+  background: #1d3557;
+}
+
+.app-container {
+  width: 100%;
+  background: #1d3557;
+}
+
+.movieViewContainer {
+  background: #457b9d;
+}
+
+.button-primary {
+  background-color: #e63946 !important;
+  border-color: #e63946 !important;
+  box-shadow: 0px 2xpx #bb1824 !important;
+}
+.button-primary:hover {
+  transition: 0.2s 0.1s !important;
+  opacity: 0.8 !important;
+}
+
+.button-secondary {
+  background-color: white !important;
+  border-color: #457b9d !important;
+  color: #457b9d !important;
+}
+.button-secondary:hover {
+  background-color: #a8dadc !important;
+  color: #1d3557 !important;
+  transition: 0.2s 0.1s !important;
+}
+
+.link-primary {
+  color: #e63946;
+  font-style: bold;
+}
+.link-primary:hover,
+.link-primary :active {
+  transition: 0.2s 0.1s !important;
+  opacity: 0.8 !important;
+}
+
+.link-secondary {
+  color: #a8dadc !important;
+}
+.link-secondary:hover,
+.link-secondary :active {
+  color: #dff1f2 !important;
+  text-decoration: underline !important;
+  transition: 0.2s 0.1s !important;
+}
+
+.nav {
+  background-color: #1d3557 !important;
+}
+.nav .nav-item {
+  background-color: #1d3557 !important;
+}
+.nav .nav-link {
+  color: #f1faee !important;
+}
+/*# sourceMappingURL=index.c1e31cef.css.map */

@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
-import { Container, CardGroup, Card, Form, Row, Col, Button } from 'react-bootstrap';
-// import { Button } from '../button/button';
-
+import { Container, CardGroup, Card, Form, Row, Col, Button, Alert } from 'react-bootstrap';
 
 export function LoginView(props) {
   const [username, setUsername] = useState('');
@@ -83,9 +81,7 @@ export function LoginView(props) {
                   <Button style={{ marginTop: 20, marginRight: 20 }} variant="primary" className="button-primary px-5" type="submit" onClick={handleSubmit}>
                     Log in
                   </Button>
-                  <Button style={{ marginTop: 20 }} variant="outline-primary" className="button-secondary px-4" type="submit" onClick={handleSubmit}>
-                    Sign up
-                  </Button>
+                  <p className="mb-0">Don't have an account yet? <Alert.Link href="/register" className="link-primary" >Sign up here</Alert.Link>.</p>
                 </Form>
               </Card.Body>
             </Card>

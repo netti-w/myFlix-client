@@ -6,6 +6,8 @@ $myFlixBlue: #457b9d;
 $myFlixDarkBlue: #1d3557;
 $myFlixRed-darker: darken($myFlixRed, 15%);
 $myFlixRed-lighter: lighten($myFlixRed, 15%);
+$myFlixLightBlue-lighter: lighten($myFlixLightBlue, 15%);
+
 
 //Custom fonts
 .bg-dark-text {
@@ -68,13 +70,13 @@ html {
 }
 
 .link-secondary {
-    color: $myFlixBlue;
-    font-style: bold;
+    color: $myFlixLightBlue  !important;
 
     &:hover,
     :active {
+        color: $myFlixLightBlue-lighter  !important;
+        text-decoration: underline !important;
         transition: 0.2s 0.1s !important;
-        opacity: 0.8 !important;
     }
 }
 
@@ -93,13 +95,3 @@ html {
 
     ;
 }
-
-
-// --- TEST - Overwriting Bootstrap theme colors --- Does not work!
-// $theme-colors: (
-//     "primary": #e63946,
-//     "ssecondary": #457b9d
-// );
-
-// // Bootstrap and its default variables
-// @import "../node_modules/bootstrap/scss/bootstrap";

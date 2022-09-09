@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from "axios";
 import PropTypes from 'prop-types';
 
 import { Container, Button, Form, Row, Col, CardGroup, Card, Alert } from 'react-bootstrap';
@@ -9,9 +10,9 @@ export function RegistrationView(props) {
   const [email, setEmail] = useState('');
   const [birthday, setBirthday] = useState('');
   const [values, setValues] = useState({
-    username: "",
-    passwordErr: "",
-    emailErr: "",
+    username: '',
+    passwordErr: '',
+    emailErr: '',
   });
 
   const validate = () => {
@@ -22,7 +23,7 @@ export function RegistrationView(props) {
     } else if (username.length < 4) {
       setValues({
         ...values,
-        usernameErr: "Your username must be at least 4 characters long.",
+        usernameErr: "Your username must be at least 4 characters long."
       });
       isReq = false;
     }
@@ -46,18 +47,18 @@ export function RegistrationView(props) {
     return isReq;
   };
 
+
   // Modify state of MainView to be registered and logged in with new user
   const handleSubmit = (e) => {
     e.preventDefault();
     const isReq = validate();
     if (isReq) {
-      axios
-        .post('https://myflix-nw.herokuapp.com/login', {
-          Username: username,
-          Password: password,
-          Email: email,
-          Birthday: birthday,
-        })
+      axios.post('https://myflix-nw.herokuapp.com/users/', {
+        Username: username,
+        Password: password,
+        Email: email,
+        Birthday: birthday,
+      })
         .then((response) => {
           const data = response.data;
           console.log(data);
@@ -72,46 +73,44 @@ export function RegistrationView(props) {
   };
 
   return (
-    <Container>
-      <Row>
-        <Col></Col>
-        <Col lg={5} md={6} sm={9}>
-          <CardGroup>
-            <Card style={{ marginTop: 20, marginBottom: 50 }}>
-              <Card.Body>
-                <Card.Title style={{ textAlign: 'center' }}>Welcome to myFlix</Card.Title>
-                <Card.Subtitle className="pb-4" style={{ textAlign: 'center' }}>Please enter your details to sign up</Card.Subtitle>
-                <Form>
-                  <Form.Group className="mb-3" controlId="formRegUsername">
-                    <Form.Label>Username:</Form.Label>
-                    <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter a username (min. 4 characters)" />
-                    {values.usernameErr && <p>{values.usernameErr}</p>}
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="formRegPassword">
-                    <Form.Label>Password:</Form.Label>
-                    <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter a password" />
-                    {values.passwordErr && <p>{values.passwordErr}</p>}
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="formRegEmail">
-                    <Form.Label>Email:</Form.Label>
-                    <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email adress" />
-                    {values.emailErr && <p>{values.emailErr}</p>}
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="formRegBirthday">
-                    <Form.Label>Birthday:</Form.Label>
-                    <Form.Control type="date" value={birthday} onChange={e => setBirthday(e.target.value)} placeholder="Enter your birthday" />
-                    {values.birthdayErr && <p>{values.birthdayErr}</p>}
-                  </Form.Group>
-                  <Button variant="primary" className="button-primary mt-2 mb-3 px-5" style={{ textAlign: 'center' }} type="submit" onClick={handleSubmit}>Sign up</Button>
-                  <p className="mb-0">Do you already have an account? <Alert.Link href="#" className="link-primary" >Log in here</Alert.Link>.</p>
-                </Form>
-              </Card.Body>
-            </Card>
-          </CardGroup>
-        </Col>
-        <Col></Col>
-      </Row>
-    </Container>
+    <Row>
+      <Col></Col>
+      <Col lg={5} md={6} sm={9}>
+        <CardGroup>
+          <Card style={{ marginTop: 20, marginBottom: 50 }}>
+            <Card.Body>
+              <Card.Title style={{ textAlign: 'center' }}>Welcome to myFlix</Card.Title>
+              <Card.Subtitle className="pb-4" style={{ textAlign: 'center' }}>Please enter your details to sign up</Card.Subtitle>
+              <Form>
+                <Form.Group className="mb-3" controlId="formUsername">
+                  <Form.Label>Username:</Form.Label>
+                  <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter a username (min. 4 characters)" />
+                  {values.usernameErr && <p>{values.usernameErr}</p>}
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formPassword">
+                  <Form.Label>Password:</Form.Label>
+                  <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter a password" />
+                  {values.passwordErr && <p>{values.passwordErr}</p>}
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formEmail">
+                  <Form.Label>Email:</Form.Label>
+                  <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email adress" />
+                  {values.emailErr && <p>{values.emailErr}</p>}
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBirthday">
+                  <Form.Label>Birthday:</Form.Label>
+                  <Form.Control type="date" value={birthday} onChange={e => setBirthday(e.target.value)} placeholder="Enter your birthday" />
+                  {values.birthdayErr && <p>{values.birthdayErr}</p>}
+                </Form.Group>
+                <Button variant="primary" className="button-primary mt-2 mb-3 px-5" style={{ textAlign: 'center' }} type="submit" onClick={handleSubmit}>Sign up</Button>
+                <p className="mb-0">Do you already have an account? <Alert.Link href="/" className="link-primary" >Log in here</Alert.Link>.</p>
+              </Form>
+            </Card.Body>
+          </Card>
+        </CardGroup>
+      </Col>
+      <Col></Col>
+    </Row>
   );
 }
 
@@ -121,6 +120,6 @@ RegistrationView.propTypes = {
     password: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     birthday: PropTypes.date
-  }),
-  onRegistered: PropTypes.func.isRequired,
+  })
 };
+

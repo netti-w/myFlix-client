@@ -1,0 +1,17 @@
+//Custom colours
+$myFlixRed: #e63946;
+$myFlixWhite: #f1faee;
+$myFlixLightBlue: #a8dadc;
+$myFlixBlue: #457b9d;
+$myFlixDarkBlue: #1d3557;
+$myFlixRed-darker: darken($myFlixRed, 15%);
+$myFlixRed-lighter: lighten($myFlixRed, 15%);
+$myFlixLightBlue-lighter: lighten($myFlixLightBlue, 15%);
+
+.movie-poster {
+    src: {
+        max-height: 300px !important;
+    }
+
+    ;
+}

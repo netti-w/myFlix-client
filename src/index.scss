@@ -11,87 +11,99 @@ $myFlixLightBlue-lighter: lighten($myFlixLightBlue, 15%);
 
 //Custom fonts
 .bg-dark-text {
-    color: $myFlixWhite;
+  color: $myFlixWhite;
 }
 
 .bg-light-text {
-    color: $myFlixDarkBlue;
+  color: $myFlixDarkBlue;
 }
 
 // Background color --- 
 body,
 html {
-    background: $myFlixDarkBlue;
+  background: $myFlixDarkBlue;
 }
 
 .app-container {
-    width: 100%;
-    background: $myFlixDarkBlue;
+  width: 100%;
+  background: $myFlixDarkBlue;
 }
 
 .movieViewContainer {
-    background: $myFlixBlue;
+  background: $myFlixBlue;
 }
 
 
 // --- TEST - applying classNames --- 
 .button-primary {
-    background-color: $myFlixRed  !important;
-    border-color: $myFlixRed  !important;
-    box-shadow: 0px 2xpx $myFlixRed-darker  !important;
+  background-color: $myFlixRed  !important;
+  border-color: $myFlixRed  !important;
+  box-shadow: 0px 2xpx $myFlixRed-darker  !important;
 
-    &:hover {
-        transition: 0.2s 0.1s !important;
-        opacity: 0.8 !important;
-    }
+  &:hover {
+    transition: 0.2s 0.1s !important;
+    opacity: 0.8 !important;
+  }
 }
 
 .button-secondary {
-    background-color: white !important;
-    border-color: $myFlixBlue  !important;
-    color: $myFlixBlue  !important;
+  background-color: white !important;
+  border-color: $myFlixBlue  !important;
+  color: $myFlixBlue  !important;
 
-    &:hover {
-        background-color: $myFlixLightBlue  !important;
-        color: $myFlixDarkBlue  !important;
-        transition: 0.2s 0.1s !important;
-    }
+  &:hover {
+    background-color: $myFlixLightBlue  !important;
+    color: $myFlixDarkBlue  !important;
+    transition: 0.2s 0.1s !important;
+  }
 }
 
 .link-primary {
-    color: $myFlixRed;
-    font-style: bold;
+  color: $myFlixRed;
+  font-style: bold;
 
-    &:hover,
-    :active {
-        transition: 0.2s 0.1s !important;
-        opacity: 0.8 !important;
-    }
+  &:hover,
+  :active {
+    transition: 0.2s 0.1s !important;
+    opacity: 0.8 !important;
+  }
 }
 
 .link-secondary {
-    color: $myFlixLightBlue  !important;
+  color: $myFlixLightBlue  !important;
 
-    &:hover,
-    :active {
-        color: $myFlixLightBlue-lighter  !important;
-        text-decoration: underline !important;
-        transition: 0.2s 0.1s !important;
-    }
+  &:hover,
+  :active {
+    color: $myFlixLightBlue-lighter  !important;
+    text-decoration: underline !important;
+    transition: 0.2s 0.1s !important;
+  }
+}
+
+.link-tertiary {
+  color: $myFlixWhite  !important;
+  text-decoration: underline !important;
+
+  &:hover,
+  :active {
+    color: $myFlixLightBlue-lighter  !important;
+    text-decoration: underline !important;
+    transition: 0.2s 0.1s !important;
+  }
 }
 
 .nav {
+  background-color: $myFlixDarkBlue  !important;
+
+  .nav-item {
     background-color: $myFlixDarkBlue  !important;
+  }
 
-    .nav-item {
-        background-color: $myFlixDarkBlue  !important;
-    }
+  ;
 
-    ;
+  .nav-link {
+    color: $myFlixWhite  !important;
+  }
 
-    .nav-link {
-        color: $myFlixWhite  !important;
-    }
-
-    ;
+  ;
 }

@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import './movie-view.scss';
 
 export class MovieView extends React.Component {
+
   render() {
     const { movie, onBackClick } = this.props;
 
@@ -47,11 +48,11 @@ export class MovieView extends React.Component {
             </div>
             <div className="movie-genre bg-dark-text">
               <span className="label">Genre: </span>
-              <span className="value"><Link to={`/genres/${movie.Genre.Name}`}>{movie.Genre.Name}</Link></span>
+              <span className="value"><Link className="link-secondary" to={`/genres/${movie.Genre.Name}`}>{movie.Genre.Name}</Link></span>
             </div>
             <div className="movie-director bg-dark-text">
               <span className="label">Director: </span>
-              <span className="value"><Link to={`/directors/${movie.Director.Name}`}>{movie.Director.Name}</Link></span>
+              <span className="value"><Link className="link-secondary" to={`/directors/${movie.Director.Name}`}>{movie.Director.Name}</Link></span>
             </div>
             <div className="movie-description bg-dark-text" style={{ marginTop: 20 }}>
               <span className="label">Description: </span>

@@ -1,0 +1,14 @@
+.movie-cardstyle {
+    margin-bottom: 15px;
+
+    card {
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        img {
+            height: 400px;
+        }
+    }
+}

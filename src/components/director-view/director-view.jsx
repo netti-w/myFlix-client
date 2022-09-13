@@ -24,7 +24,7 @@ export class DirectorView extends React.Component {
               <span className="label">Died: </span>
               <span className="value">{director.Death}</span>
             </div>) : (<div />)}
-            <div className="director-bio bg-dark-text">
+            <div className="director-bio bg-dark-text" style={{ marginTop: 20 }}>
               <span className="label">Biography: </span>
               <span className="value">{director.Bio}</span>
             </div>

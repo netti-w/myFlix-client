@@ -81,7 +81,7 @@ export function LoginView(props) {
                   <Button style={{ marginTop: 20, marginRight: 20 }} variant="primary" className="button-primary px-5" type="submit" onClick={handleSubmit}>
                     Log in
                   </Button>
-                  <p className="mb-0">Don't have an account yet? <Alert.Link href="/register" className="link-primary" >Sign up here</Alert.Link>.</p>
+                  <p className="mt-2">Don't have an account yet? <Alert.Link href="/register" className="link-primary" >Sign up here</Alert.Link>.</p>
                 </Form>
               </Card.Body>
             </Card>

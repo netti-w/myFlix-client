@@ -1,3 +1,15 @@
+.movie-cardstyle {
+  margin-bottom: 15px;
+}
+.movie-cardstyle card {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.movie-cardstyle card img {
+  height: 400px;
+}
 .movie-poster {
   src-max-height: 300px !important;
 }
@@ -97,4 +109,4 @@ html {
 .nav .nav-link {
   color: #f1faee !important;
 }
-/*# sourceMappingURL=index.c1e31cef.css.map */
+/*# sourceMappingURL=index.3f764291.css.map */

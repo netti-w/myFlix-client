@@ -1,12 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { UserInfo } from "../user-info/user-info";
 
-import { Container, Button, Row, Col, Card, Form, CardGroup, Figure } from 'react-bootstrap';
-
-import { Link } from "react-router-dom";
+import { Container, Button, Row, Col, Card, Form, CardGroup, Figure, CardImg } from 'react-bootstrap';
 
 export class ProfileView extends React.Component {
   constructor() {
@@ -36,15 +32,16 @@ export class ProfileView extends React.Component {
           Password: response.data.Password,
           Email: response.data.Email,
           Birthday: response.data.Birthday,
-          FavouriteMovies: response.data.FavouriteMovies,
+          FavouriteMovies: response.data.FavouriteMovies
         });
+        console.log([Birthday])
       })
       .catch(function (error) {
         console.log(error);
       });
   };
 
-  editUser = (e) => {
+  onEditUser = (e) => {
     e.preventDefault();
     const Username = localStorage.getItem("user");
     const token = localStorage.getItem("token");
@@ -53,7 +50,7 @@ export class ProfileView extends React.Component {
         Username: this.state.Username,
         Password: this.state.Password,
         Email: this.state.Email,
-        Birthday: this.state.Birthday,
+        Birthday: this.state.Birthday
       },
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -64,7 +61,7 @@ export class ProfileView extends React.Component {
           Username: response.data.Username,
           Password: response.data.Password,
           Email: response.data.Email,
-          Birthday: response.data.Birthday,
+          Birthday: response.data.Birthday
         });
 
         localStorage.setItem("user", this.state.Username);
@@ -79,7 +76,7 @@ export class ProfileView extends React.Component {
       });
   };
 
-  onDeleteUser() {
+  deleteUser() {
     const Username = localStorage.getItem("user");
     const token = localStorage.getItem("token");
 
@@ -99,13 +96,14 @@ export class ProfileView extends React.Component {
   }
 
 
-  onRemoveFavourite = (e, movie) => {
+  handleRemoveFavourite = (e, movieId) => {
     const username = localStorage.getItem("user");
+    const accessToken = localStorage.getItem("token");
     console.log(username);
-    const token = localStorage.getItem("token");
+    console.log(token);
     console.log(this.props);
-    axios.delete(`https://myflix-nw.herokuapp.com/users/${Username}/movies/${movie._id}`,
-      { headers: { Authorization: `Bearer ${token}` } }
+    axios.delete(`https://myflix-nw.herokuapp.com/users/${Username}/movies/${movieId}`,
+      { headers: { Authorization: `Bearer ${accessToken}` } }
     )
       .then((response) => {
         console.log(response);
@@ -125,11 +123,6 @@ export class ProfileView extends React.Component {
     });
     window.open("/", "_self");
   }
-
-
-
-
-
 
   // Set user values
   setUsername(value) {
@@ -160,26 +153,33 @@ export class ProfileView extends React.Component {
     this.Birthday = value;
   }
 
+
   render() {
-    const { movie } = this.props;
+    // const { movies } = this.props;
     const { FavouriteMovies, Username, Email, Birthday, Password } = this.state;
+
+    // console.log(movies);
+    console.log(this.props)
+    // console.log(FavouriteMovies)
+    // console.log(this.state)
 
     return (
       <Container>
-        <Row className="user-profile" style={{ marginTop: 20, marginBottom: 20 }}>
+        <Row className="user-profile" style={{ marginTop: 20, marginBottom: 15 }}>
           <h3 className="bg-dark-text">{Username}'s profile</h3>
         </Row>
         <Row>
-          <Col>
+          <Col style={{ marginBottom: 30 }}>
             <Card>
               <Card.Body>
                 <Card.Title style={{ textAlign: 'center' }}>Your Profile Details</Card.Title>
+                <p>Profile name: {Username}</p>
                 <p>Email: {Email}</p>
                 <p>Birthday: {Birthday}</p>
               </Card.Body>
             </Card>
           </Col>
-          <Col>
+          <Col style={{ marginBottom: 20 }}>
             <CardGroup>
               <Card>
                 <Card.Body>
@@ -188,24 +188,24 @@ export class ProfileView extends React.Component {
                   <Form>
                     <Form.Group className="mb-3" controlId="formUsername">
                       <Form.Label>*Username:</Form.Label>
-                      <Form.Control type="text" onChange={e => setUsername(e.target.value)} placeholder="Enter a name (min. 4 characters)" />
+                      <Form.Control type="text" onChange={e => this.setUsername(e.target.value)} placeholder="Enter your current username or a new one (min. 4 characters)" />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formPassword">
                       <Form.Label>*Password:</Form.Label>
-                      <Form.Control type="password" onChange={e => setPassword(e.target.value)} placeholder="Enter your password" />
+                      <Form.Control type="password" onChange={e => this.setPassword(e.target.value)} placeholder="Enter your current password or a new one (min. 6 characters)" />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formEmail">
                       <Form.Label>*Email:</Form.Label>
-                      <Form.Control type="email" onChange={e => setEmail(e.target.value)} placeholder="Enter your email adress" />
+                      <Form.Control type="email" onChange={e => this.setEmail(e.target.value)} placeholder="Enter your current email adress or a new one" />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBirthday">
                       <Form.Label>Birthday:</Form.Label>
-                      <Form.Control type="date" onChange={e => setBirthday(e.target.value)} placeholder="Enter your birthday" />
+                      <Form.Control type="date" onChange={e => this.setBirthday(e.target.value)} placeholder="Enter your birthday" />
                     </Form.Group>
-                    <Button variant="primary" className="button-primary mt-2 mb-3 px-5" style={{ textAlign: 'center' }} type="submit" onClick={() => this.editUser()}>Update Profile</Button>
+                    <Button variant="primary" className="button-primary mt-2 mb-3 px-5" style={{ textAlign: 'center' }} type="submit" onClick={() => this.onEditUser()}>Update Profile</Button>
                     <p></p>
                     <p className="mb-0 small">Do you want to delete your account? We will delete all your user data.</p>
-                    <Button className="button-secondary mt-2 mb-3 px-5" variant="secondary" onClick={() => this.onDeleteUser()}>Delete Account</Button>
+                    <Button className="button-secondary mt-2 mb-3 px-5" variant="secondary" onClick={() => this.deleteUser()}>Delete Account</Button>
                   </Form>
                 </Card.Body>
               </Card>
@@ -221,23 +221,22 @@ export class ProfileView extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Card>
-              </Card>
-              {FavouriteMovies.map((movie) => {
+              {FavouriteMovies.map((_id, ImagePath, Title, movies) => {
                 return (
-                  <Col key={movie._id}>
+                  <Col key={_id}>
                     <Figure>
-                      <Link to={`/movies/${movie._id}`}>
-                        <Figure.Image src={movie.ImagePath} />
-                        <Figure.Caption>{movie.Title}</Figure.Caption>
+                      <Link to={`/movies/${_id}`}>
+                        <Figure.Image src={ImagePath} alt={Title} />
                       </Link>
+                      <Figure.Caption>{Title}</Figure.Caption>
                     </Figure>
-                    <Button className="button-secondary" variant="secondary" onClick={() => removeFav(FavouriteMovies._id)}>Remove</Button>
+                    <Button className="button-secondary" onClick={() => handleRemoveFavourite(_id, e)} >
+                      Remove
+                    </Button>
                   </Col>
                 );
               })}
             </Row>
-
           </Card.Body>
         </Card>
       </Container>

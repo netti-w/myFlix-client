@@ -45378,9 +45378,13 @@ function ProfileView(props) {
     };
     const favouriteMoviesId = favouriteMovies.map((movies1)=>movies1._id
     );
-    const favouriteMoviesList = movies.filter((movies1)=>{
+    const favouriteMoviesList = favouriteMovies.map((movies1)=>{
         return favouriteMoviesId.includes(movies1._id);
     });
+    // console.log(movies)
+    console.log(favouriteMovies);
+    // console.log(favouriteMoviesId)
+    console.log(favouriteMoviesList);
     const handleMovieDelete = (movieId)=>{
         _axiosDefault.default.delete(`https://myflix-nw.herokuapp.com/users/${currentUser}/movies/${movieId}`, {
             headers: {
@@ -45395,12 +45399,6 @@ function ProfileView(props) {
     _react.useEffect(()=>{
         getUser();
     }, []);
-    // console.log(movies)
-    // console.log(user)
-    // console.log(currentUser)
-    // console.log(favouriteMovies)
-    console.log(favouriteMoviesId);
-    console.log(favouriteMoviesList);
     return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Container, {
         __source: {
             fileName: "src/components/profile-view/profile-view.jsx",
@@ -45869,7 +45867,7 @@ function ProfileView(props) {
                                         },
                                         __self: this,
                                         children: "You currently don't have any movies in your list."
-                                    }) : favouriteMovies.map((movies1)=>{
+                                    }) : favouriteMoviesList.map((movies1)=>{
                                         return(/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
                                             xs: 12,
                                             md: 6,
@@ -45897,7 +45895,7 @@ function ProfileView(props) {
                                                         children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card.Img, {
                                                             variant: "top",
                                                             crossOrigin: "Anonymous",
-                                                            src: "https://m.media-amazon.com/images/M/MV5BMDZjZWE0ZjktZjBlOS00YmFiLWFlYjctY2IwZmUxMzQyZjUyXkEyXkFqcGdeQXVyMTA4NjE0NjEy._V1_.jpg",
+                                                            src: movies1.ImagePath,
                                                             __source: {
                                                                 fileName: "src/components/profile-view/profile-view.jsx",
                                                                 lineNumber: 212

@@ -8,7 +8,7 @@ import { Container, Button, Row, Col, Card, Form, CardGroup } from 'react-bootst
 
 export function ProfileView(props) {
   const [user, setUser] = useState(props.user);
-  const [movies, setMovies] = useState(props.movies);
+  const movies = useState(props.movies);
   const [favouriteMovies, setFavouriteMovies] = useState([]);
   const currentUser = localStorage.getItem('user');
   const token = localStorage.getItem('token');
@@ -81,9 +81,9 @@ export function ProfileView(props) {
         })
         .then((response) => {
           const data = response.data;
-          console.log(data);
+          // localStorage.setItem('user', username);
+          // props.onUpdatedUser(username);
           alert('Update was successful');
-          this.componentDidMount();
           window.open(`/users/${username}`, '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
         })
         .catch((response) => {
@@ -105,16 +105,14 @@ export function ProfileView(props) {
       catch(error => console.error(error))
   }
 
-
   const favouriteMoviesId = favouriteMovies.map(movies => movies._id)
   const favouriteMoviesList = favouriteMovies.map(movies => {
     return favouriteMoviesId.includes(movies._id)
   })
-
   // console.log(movies)
-  console.log(favouriteMovies)
+  // console.log(favouriteMovies)
   // console.log(favouriteMoviesId)
-  console.log(favouriteMoviesList)
+  // console.log(favouriteMoviesList)
 
   const handleMovieDelete = (movieId) => {
     axios.delete(`https://myflix-nw.herokuapp.com/users/${currentUser}/movies/${movieId}`, {
@@ -130,9 +128,6 @@ export function ProfileView(props) {
   useEffect(() => {
     getUser();
   }, [])
-
-
-
 
   return (
     <Container>
@@ -162,17 +157,17 @@ export function ProfileView(props) {
                 <Card.Text className="pb-6" style={{ textAlign: 'center' }}>*Please fill out all the required fields.</Card.Text>
                 <Form>
                   <Form.Group className="mb-3" controlId="formUsername">
-                    <Form.Label>Username:</Form.Label>
+                    <Form.Label>*Username:</Form.Label>
                     <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter your current username or a new one (min. 4 characters)" />
                     {values.usernameErr && <p>{values.usernameErr}</p>}
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formPassword">
-                    <Form.Label>Password:</Form.Label>
+                    <Form.Label>*Password:</Form.Label>
                     <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your current password or a new one (min. 6 characters)" />
                     {values.passwordErr && <p>{values.passwordErr}</p>}
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formEmail">
-                    <Form.Label>Email:</Form.Label>
+                    <Form.Label>*Email:</Form.Label>
                     <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your current email adress or a new one" />
                     {values.emailErr && <p>{values.emailErr}</p>}
                   </Form.Group>

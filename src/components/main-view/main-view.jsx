@@ -62,6 +62,15 @@ class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
+  // onUpdatedUser(user) {
+  //   console.log(user);
+  //   this.setState({
+  //     user: user.Username
+  //   });
+  //   localStorage.setItem('user', user.Username);
+  //   this.getMovies(authData.token);
+  // }
+
   onLoggedOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');

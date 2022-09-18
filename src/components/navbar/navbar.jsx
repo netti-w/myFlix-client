@@ -7,6 +7,7 @@ import "./navbar.scss";
 
 export function NavBar() {
   let user = localStorage.getItem("user");
+  console.log(user)
 
   const handleLogOut = (e) => {
     e.preventDefault();

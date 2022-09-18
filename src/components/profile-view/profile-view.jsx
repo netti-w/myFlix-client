@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { setUser } from '../../actions/actions';
+import { connect } from 'react-redux';
 
 import './profile-view.scss';
 
@@ -19,6 +21,8 @@ export function ProfileView(props) {
     })
       .then(response => {
         setUser(response.data);
+        // redux
+        // this.props.setUser(response.data);
         setFavouriteMovies(response.data.FavouriteMovies)
       })
       .catch(error => console.error(error))
@@ -36,16 +40,6 @@ export function ProfileView(props) {
 
   const validate = () => {
     let isReq = true;
-    if (!username) {
-      setValues({ ...values, usernameErr: "Username is required." });
-      isReq = false;
-    } else if (username.length < 4) {
-      setValues({
-        ...values,
-        usernameErr: "Your username must be at least 4 characters long."
-      });
-      isReq = false;
-    }
     if (!password) {
       setValues({ ...values, passwordErr: "Password is required." });
       isReq = false;
@@ -63,6 +57,13 @@ export function ProfileView(props) {
       setValues({ ...values, emailErr: "This email is invalid" });
       isReq = false;
     }
+    if (!email) {
+      setValues({ ...values, emailErr: "Email is required" });
+      isReq = false;
+    } else if (email.indexOf("@") === -1) {
+      setValues({ ...values, emailErr: "This email is invalid" });
+      isReq = false;
+    }
     return isReq;
   };
 
@@ -71,7 +72,7 @@ export function ProfileView(props) {
     const isReq = validate();
     if (isReq) {
       axios.put(`https://myflix-nw.herokuapp.com/users/${currentUser}`, {
-        Username: username,
+        Username: currentUser,
         Password: password,
         Email: email,
         Birthday: birthday,
@@ -81,10 +82,8 @@ export function ProfileView(props) {
         })
         .then((response) => {
           const data = response.data;
-          // localStorage.setItem('user', username);
-          // props.onUpdatedUser(username);
           alert('Update was successful');
-          window.open(`/users/${username}`, '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+          window.open(`/users/${currentUser}`, '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
         })
         .catch((response) => {
           console.error(response);
@@ -109,7 +108,6 @@ export function ProfileView(props) {
   const favouriteMoviesList = favouriteMovies.map(movies => {
     return favouriteMoviesId.includes(movies._id)
   })
-  // console.log(movies)
   // console.log(favouriteMovies)
   // console.log(favouriteMoviesId)
   // console.log(favouriteMoviesList)
@@ -157,23 +155,22 @@ export function ProfileView(props) {
                 <Card.Text className="pb-6" style={{ textAlign: 'center' }}>*Please fill out all the required fields.</Card.Text>
                 <Form>
                   <Form.Group className="mb-3" controlId="formUsername">
-                    <Form.Label>*Username:</Form.Label>
-                    <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter your current username or a new one (min. 4 characters)" />
-                    {values.usernameErr && <p>{values.usernameErr}</p>}
+                    <Form.Label>Username:</Form.Label>
+                    <Form.Control className="form-control-sm" type="text" value={currentUser} onChange={e => setUsername(e.target.value)} disabled />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formPassword">
                     <Form.Label>*Password:</Form.Label>
-                    <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your current password or a new one (min. 6 characters)" />
+                    <Form.Control className="form-control-sm" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your password or a new one (min. 6 characters)" />
                     {values.passwordErr && <p>{values.passwordErr}</p>}
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formEmail">
                     <Form.Label>*Email:</Form.Label>
-                    <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your current email adress or a new one" />
+                    <Form.Control className="form-control-sm" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email adress or a new one" />
                     {values.emailErr && <p>{values.emailErr}</p>}
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBirthday">
                     <Form.Label>Birthday:</Form.Label>
-                    <Form.Control type="date" value={birthday} onChange={e => setBirthday(e.target.value)} placeholder="Enter your birthday" />
+                    <Form.Control className="form-control-sm" type="date" value={birthday} onChange={e => setBirthday(e.target.value)} placeholder="Enter your birthday" />
                     {values.birthdayErr && <p>{values.birthdayErr}</p>}
                   </Form.Group>
                   <Button variant="primary" className="button-primary mt-2 mb-3 px-5" style={{ textAlign: 'center' }} type="submit" onClick={updateUser}>Update profile</Button>
@@ -224,3 +221,11 @@ export function ProfileView(props) {
     </Container>
   );
 }
+
+// let mapStateToProps = state => {
+//   return {
+//     user: state.user
+//   }
+// }
+
+// export default connect(mapStateToProps, { setUser })(ProfileView);

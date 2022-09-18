@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setUser } from '../../actions/actions';
 
 import { Container, CardGroup, Card, Form, Row, Col, Button, Alert } from 'react-bootstrap';
 
-export function LoginView(props) {
+function LoginView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [usernameErr, setUsernameErr] = useState('');
@@ -94,9 +96,13 @@ export function LoginView(props) {
 }
 
 LoginView.propTypes = {
-  user: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-  }),
   onLoggedIn: PropTypes.func.isRequired,
 };
+
+let mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, { setUser })(LoginView);

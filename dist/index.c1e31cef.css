@@ -14,6 +14,18 @@
 .fav-movie card img {
   height: 400px;
 }
+.movie-cardstyle {
+  margin-bottom: 15px;
+}
+.movie-cardstyle card {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.movie-cardstyle card img {
+  height: 400px;
+}
 .bg-dark-text {
   color: #f1faee;
 }

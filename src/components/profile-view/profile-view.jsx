@@ -8,10 +8,12 @@ import { Container, Button, Row, Col, Card, Form, CardGroup } from 'react-bootst
 
 export function ProfileView(props) {
   const [user, setUser] = useState(props.user);
-  const movies = useState(props.movies);
   const [favouriteMovies, setFavouriteMovies] = useState([]);
   const currentUser = localStorage.getItem('user');
   const token = localStorage.getItem('token');
+  const favouriteMoviesList = props.movies.filter(movie => {
+    return favouriteMovies.includes(movie._id)
+  })
 
   const getUser = () => {
     axios.get(`https://myflix-nw.herokuapp.com/users/${currentUser}`, {
@@ -24,28 +26,28 @@ export function ProfileView(props) {
       .catch(error => console.error(error))
   }
 
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [birthday, setBirthday] = useState('');
   const [values, setValues] = useState({
-    username: '',
     passwordErr: '',
     emailErr: '',
   });
 
   const validate = () => {
     let isReq = true;
-    if (!username) {
-      setValues({ ...values, usernameErr: "Username is required." });
-      isReq = false;
-    } else if (username.length < 4) {
-      setValues({
-        ...values,
-        usernameErr: "Your username must be at least 4 characters long."
-      });
-      isReq = false;
-    }
+
+    /// ---> Username should not be changed as being the unique identifier
+    // if (!username) {
+    //   setValues({ ...values, usernameErr: "Username is required." });
+    //   isReq = false;
+    // } else if (username.length < 4) {
+    //   setValues({
+    //     ...values,
+    //     usernameErr: "Your username must be at least 4 characters long."
+    //   });
+    //   isReq = false;
+    // }
     if (!password) {
       setValues({ ...values, passwordErr: "Password is required." });
       isReq = false;
@@ -71,7 +73,7 @@ export function ProfileView(props) {
     const isReq = validate();
     if (isReq) {
       axios.put(`https://myflix-nw.herokuapp.com/users/${currentUser}`, {
-        Username: username,
+        Username: currentUser,
         Password: password,
         Email: email,
         Birthday: birthday,
@@ -81,10 +83,8 @@ export function ProfileView(props) {
         })
         .then((response) => {
           const data = response.data;
-          // localStorage.setItem('user', username);
-          // props.onUpdatedUser(username);
           alert('Update was successful');
-          window.open(`/users/${username}`, '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+          window.open(`/users/${currentUser}`, '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
         })
         .catch((response) => {
           console.error(response);
@@ -105,22 +105,13 @@ export function ProfileView(props) {
       catch(error => console.error(error))
   }
 
-  const favouriteMoviesId = favouriteMovies.map(movies => movies._id)
-  const favouriteMoviesList = favouriteMovies.map(movies => {
-    return favouriteMoviesId.includes(movies._id)
-  })
-  // console.log(movies)
-  // console.log(favouriteMovies)
-  // console.log(favouriteMoviesId)
-  // console.log(favouriteMoviesList)
-
   const handleMovieDelete = (movieId) => {
     axios.delete(`https://myflix-nw.herokuapp.com/users/${currentUser}/movies/${movieId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(() => {
         alert(`The movie was successfully deleted.`)
-        window.open(`/users/:${currentUser}`, '_self');
+        window.open(`/users/${currentUser}`, '_self');
       }).
       catch(error => console.error(error))
   }
@@ -157,25 +148,27 @@ export function ProfileView(props) {
                 <Card.Text className="pb-6" style={{ textAlign: 'center' }}>*Please fill out all the required fields.</Card.Text>
                 <Form>
                   <Form.Group className="mb-3" controlId="formUsername">
-                    <Form.Label>*Username:</Form.Label>
-                    <Form.Control type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter your current username or a new one (min. 4 characters)" />
-                    {values.usernameErr && <p>{values.usernameErr}</p>}
+                    <Form.Label>Username (cannot be changed):</Form.Label>
+                    <Form.Control type="text" className="form-control-sm" value={currentUser} onChange={e => setUsername(e.target.value)} disabled />
+
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formPassword">
                     <Form.Label>*Password:</Form.Label>
-                    <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your current password or a new one (min. 6 characters)" />
+                    <Form.Control type="password" className="form-control-sm" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your current password or a new one (min. 6 characters)" />
                     {values.passwordErr && <p>{values.passwordErr}</p>}
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formEmail">
                     <Form.Label>*Email:</Form.Label>
-                    <Form.Control type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your current email adress or a new one" />
+                    <Form.Control type="email" className="form-control-sm" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your current email adress or a new one" />
                     {values.emailErr && <p>{values.emailErr}</p>}
                   </Form.Group>
-                  <Form.Group className="mb-3" controlId="formBirthday">
-                    <Form.Label>Birthday:</Form.Label>
-                    <Form.Control type="date" value={birthday} onChange={e => setBirthday(e.target.value)} placeholder="Enter your birthday" />
-                    {values.birthdayErr && <p>{values.birthdayErr}</p>}
-                  </Form.Group>
+                  {user.Birthday == null && (
+                    <Form.Group className="mb-3" controlId="formBirthday">
+                      <Form.Label>Tell us your Birthday:</Form.Label>
+                      <Form.Control type="date" className="form-control-sm" value={birthday} onChange={e => setBirthday(e.target.value)} placeholder="Enter your birthday" />
+                      {values.birthdayErr && <p>{values.birthdayErr}</p>}
+                    </Form.Group>
+                  )}
                   <Button variant="primary" className="button-primary mt-2 mb-3 px-5" style={{ textAlign: 'center' }} type="submit" onClick={updateUser}>Update profile</Button>
                   <p></p>
                   <p className="mb-0 small">Do you want to delete your account? We will delete all your user data.</p>
@@ -191,7 +184,7 @@ export function ProfileView(props) {
           <Card >
             <Card.Body>
               <Row >
-                <Col>
+                <Col style={{ marginBottom: 10 }}>
                   <h4>Your Favourite Movies</h4>
                 </Col>
               </Row>

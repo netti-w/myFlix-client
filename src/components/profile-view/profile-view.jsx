@@ -10,10 +10,12 @@ import { Container, Button, Row, Col, Card, Form, CardGroup } from 'react-bootst
 
 export function ProfileView(props) {
   const [user, setUser] = useState(props.user);
-  const movies = useState(props.movies);
   const [favouriteMovies, setFavouriteMovies] = useState([]);
   const currentUser = localStorage.getItem('user');
   const token = localStorage.getItem('token');
+  const favouriteMoviesList = props.movies.filter(movie => {
+    return favouriteMovies.includes(movie._id)
+  })
 
   const getUser = () => {
     axios.get(`https://myflix-nw.herokuapp.com/users/${currentUser}`, {
@@ -28,12 +30,10 @@ export function ProfileView(props) {
       .catch(error => console.error(error))
   }
 
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [birthday, setBirthday] = useState('');
   const [values, setValues] = useState({
-    username: '',
     passwordErr: '',
     emailErr: '',
   });
@@ -48,13 +48,6 @@ export function ProfileView(props) {
         ...values,
         passwordErr: "Your password must be atleast 6 characters long"
       });
-      isReq = false;
-    }
-    if (!email) {
-      setValues({ ...values, emailErr: "Email is required" });
-      isReq = false;
-    } else if (email.indexOf("@") === -1) {
-      setValues({ ...values, emailErr: "This email is invalid" });
       isReq = false;
     }
     if (!email) {
@@ -104,13 +97,6 @@ export function ProfileView(props) {
       catch(error => console.error(error))
   }
 
-  const favouriteMoviesId = favouriteMovies.map(movies => movies._id)
-  const favouriteMoviesList = favouriteMovies.map(movies => {
-    return favouriteMoviesId.includes(movies._id)
-  })
-  // console.log(favouriteMovies)
-  // console.log(favouriteMoviesId)
-  // console.log(favouriteMoviesList)
 
   const handleMovieDelete = (movieId) => {
     axios.delete(`https://myflix-nw.herokuapp.com/users/${currentUser}/movies/${movieId}`, {
@@ -118,7 +104,7 @@ export function ProfileView(props) {
     })
       .then(() => {
         alert(`The movie was successfully deleted.`)
-        window.open(`/users/:${currentUser}`, '_self');
+        window.open(`/users/${currentUser}`, '_self');
       }).
       catch(error => console.error(error))
   }
@@ -155,7 +141,7 @@ export function ProfileView(props) {
                 <Card.Text className="pb-6" style={{ textAlign: 'center' }}>*Please fill out all the required fields.</Card.Text>
                 <Form>
                   <Form.Group className="mb-3" controlId="formUsername">
-                    <Form.Label>Username:</Form.Label>
+                    <Form.Label>Username (cannot be changed):</Form.Label>
                     <Form.Control className="form-control-sm" type="text" value={currentUser} onChange={e => setUsername(e.target.value)} disabled />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formPassword">
@@ -168,11 +154,13 @@ export function ProfileView(props) {
                     <Form.Control className="form-control-sm" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email adress or a new one" />
                     {values.emailErr && <p>{values.emailErr}</p>}
                   </Form.Group>
-                  <Form.Group className="mb-3" controlId="formBirthday">
-                    <Form.Label>Birthday:</Form.Label>
-                    <Form.Control className="form-control-sm" type="date" value={birthday} onChange={e => setBirthday(e.target.value)} placeholder="Enter your birthday" />
-                    {values.birthdayErr && <p>{values.birthdayErr}</p>}
-                  </Form.Group>
+                  {user.Birthday == null && (
+                    <Form.Group className="mb-3" controlId="formBirthday">
+                      <Form.Label>Birthday:</Form.Label>
+                      <Form.Control className="form-control-sm" type="date" value={birthday} onChange={e => setBirthday(e.target.value)} placeholder="Enter your birthday" />
+                      {values.birthdayErr && <p>{values.birthdayErr}</p>}
+                    </Form.Group>
+                  )}
                   <Button variant="primary" className="button-primary mt-2 mb-3 px-5" style={{ textAlign: 'center' }} type="submit" onClick={updateUser}>Update profile</Button>
                   <p></p>
                   <p className="mb-0 small">Do you want to delete your account? We will delete all your user data.</p>
@@ -188,7 +176,7 @@ export function ProfileView(props) {
           <Card >
             <Card.Body>
               <Row >
-                <Col>
+                <Col style={{ marginBottom: 10 }}>
                   <h4>Your Favourite Movies</h4>
                 </Col>
               </Row>

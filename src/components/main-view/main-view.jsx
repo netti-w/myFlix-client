@@ -52,14 +52,14 @@ class MainView extends React.Component {
     this.props.setUser({
       user: authData.user
     });
-    console.log(authData.user.Username);
-    console.log(authData.user);
+    // console.log(authData.user.Username);
+    // console.log(authData.user);
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
-    localStorage.setItem('email', authData.user.Email);
-    localStorage.setItem('password', authData.user.Password);
-    localStorage.setItem('birthday', authData.user.Birthday);
-    localStorage.setItem('favouriteMovies', authData.user.FavouriteMovies);
+    // localStorage.setItem('email', authData.user.Email);
+    // localStorage.setItem('password', authData.user.Password);
+    // localStorage.setItem('birthday', authData.user.Birthday);
+    // localStorage.setItem('favouriteMovies', authData.user.FavouriteMovies);
     this.getMovies(authData.token);
   }
 
@@ -110,9 +110,11 @@ class MainView extends React.Component {
           />
 
           <Route
-            path={`/users/${user}`}
+            // path={`/users/${user}`} // not displaying profile view -> 'user' prop is only referenced [object Object]
+            path={`/users/:${user.user}`} // //test displaying profile view - only works after login
             render={({ history }) => {
-              if (!user) return <Redirect to="/" />;
+              // if (!user) return <Redirect to="/" />; // still rendering because there is a value -> here an object
+              if (!user.user) return <Redirect to="/" />; //test displaying profile view - only works after login
               return (
                 <Col>
                   <ProfileView

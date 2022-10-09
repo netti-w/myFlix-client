@@ -9,6 +9,7 @@ import './profile-view.scss';
 import { Container, Button, Row, Col, Card, Form, CardGroup } from 'react-bootstrap';
 
 export function ProfileView(props) {
+  // const { movies, user } = props;  // test getting state from mainview
   const [user, setUser] = useState(props.user);
   const [favouriteMovies, setFavouriteMovies] = useState([]);
   const currentUser = localStorage.getItem('user');
@@ -23,8 +24,8 @@ export function ProfileView(props) {
     })
       .then(response => {
         setUser(response.data);
-        // redux
-        // this.props.setUser(response.data);
+
+        // this.props.setUser(response.data); // redux
         setFavouriteMovies(response.data.FavouriteMovies)
       })
       .catch(error => console.error(error))

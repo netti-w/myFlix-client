@@ -12,7 +12,8 @@ export function ProfileView(props) {
   // const { movies, user } = props;  // test getting state from mainview
   const [user, setUser] = useState(props.user);
   const [favouriteMovies, setFavouriteMovies] = useState([]);
-  const currentUser = localStorage.getItem('user');
+  const currentUser = localStorage.getItem('username');
+
   const token = localStorage.getItem('token');
   const favouriteMoviesList = props.movies.filter(movie => {
     return favouriteMovies.includes(movie._id)

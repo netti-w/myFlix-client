@@ -13,17 +13,14 @@ export class MovieView extends React.Component {
     const { movie, onBackClick } = this.props;
 
     const handleAddFavourite = (movieId) => {
-      const Username = localStorage.getItem("user");
-      const accessToken = localStorage.getItem("token");
-      console.log(Username);
-      console.log(accessToken);
-      console.log(movieId);
+      const Username = localStorage.getItem('username');
+      const accessToken = localStorage.getItem('token');
+
       axios.put(`https://myflix-nw.herokuapp.com/users/${Username}/movies/${movieId}`,
         { headers: { Authorization: `Bearer ${accessToken}` } })
         .then((response) => {
           console.log(response);
           alert("Movie was added to favourites.");
-          this.componentDidMount();
         })
         .catch(function (error) {
           console.log(error);

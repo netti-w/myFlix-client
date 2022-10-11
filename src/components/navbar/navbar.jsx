@@ -6,8 +6,7 @@ import { Link } from "react-router-dom";
 import "./navbar.scss";
 
 export function NavBar() {
-  let user = localStorage.getItem("user");
-  // console.log(user)
+  let user = localStorage.getItem("username");
 
   const handleLogOut = (e) => {
     e.preventDefault();

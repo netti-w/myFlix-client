@@ -30,7 +30,7 @@ class MainView extends React.Component {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
       this.props.setUser({
-        user: localStorage.getItem('user')
+        user: localStorage.getItem('username')
       });
       this.getMovies(accessToken);
     }
@@ -52,20 +52,14 @@ class MainView extends React.Component {
     this.props.setUser({
       user: authData.user
     });
-    // console.log(authData.user.Username);
-    // console.log(authData.user);
     localStorage.setItem('token', authData.token);
-    localStorage.setItem('user', authData.user.Username);
-    // localStorage.setItem('email', authData.user.Email);
-    // localStorage.setItem('password', authData.user.Password);
-    // localStorage.setItem('birthday', authData.user.Birthday);
-    // localStorage.setItem('favouriteMovies', authData.user.FavouriteMovies);
+    localStorage.setItem('username', authData.user.Username);
     this.getMovies(authData.token);
   }
 
   onLoggedOut() {
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('username');
     this.setState({
       user: null
     });
@@ -74,7 +68,7 @@ class MainView extends React.Component {
 
   render() {
     let { movies, user } = this.props;
-
+    console.log(user)
     return (
       <Router>
         <NavBar user={user} />
@@ -110,11 +104,9 @@ class MainView extends React.Component {
           />
 
           <Route
-            // path={`/users/${user}`} // not displaying profile view -> 'user' prop is only referenced [object Object]
-            path={`/users/:${user.user}`} // //test displaying profile view - only works after login
+            path={`/users/${user.user}`}
             render={({ history }) => {
-              // if (!user) return <Redirect to="/" />; // still rendering because there is a value -> here an object
-              if (!user.user) return <Redirect to="/" />; //test displaying profile view - only works after login
+              if (!user.user) return <Redirect to="/" />;
               return (
                 <Col>
                   <ProfileView

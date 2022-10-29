@@ -33,9 +33,11 @@ git clone https://github.com/netti-w/myFlix-client
 ```
 npm install
 ```
-### Run application
-The app is built with Parcel, to run the app locally, run `parcel/src/index.html` and navigate to http://localhost:1234/. 
+### Run application locally
+The app is built with Parcel, to run the app locally, run `parcel/src/index.html` and navigate to `http://localhost:1234/`. 
 
+### Usage
+Sign up as a new user. After Registration, go and login with your username and password. In the movies view, click on a movie to see movie details or to add it to your favourites' list. Additionally you can click on the director and genre to get further details. In the user profile you can change your profile details or remove movies from your favourites' list.
 
 ## Dependancy
 - HTML5

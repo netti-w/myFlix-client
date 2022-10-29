@@ -51,6 +51,7 @@ Sign up as a new user. After Registration, go and login with your username and p
 - Redux
 - Axios
 - PropTypes
+- Parcel (Dev Dependancy)
 
 ## Project screenshots
 Login view:

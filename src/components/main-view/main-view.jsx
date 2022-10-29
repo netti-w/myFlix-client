@@ -68,7 +68,7 @@ class MainView extends React.Component {
 
   render() {
     let { movies, user } = this.props;
-    console.log(user)
+
     return (
       <Router>
         <NavBar user={user} />

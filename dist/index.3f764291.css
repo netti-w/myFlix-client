@@ -1,19 +1,15 @@
-.movie-cardstyle {
-  margin-bottom: 15px;
-}
-.movie-cardstyle card {
+.movie-cardstyle img {
+  height: 250px;
+  overflow: hidden;
   position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.movie-cardstyle card img {
-  height: 400px;
-}
+
 .movie-poster {
   src-max-height: 300px !important;
 }
-
 .fav-movie {
   margin-bottom: 15px;
 }

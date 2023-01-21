@@ -38,7 +38,7 @@ function LoginView(props) {
     const isReq = validate();
     if (isReq) {
       /* Send request to the server for authentication */
-      axios.post('https://myflix-nw.herokuapp.com/login', {
+      axios.post('https://vercel-test-virid-two.vercel.app/login', {
         Username: username,
         Password: password
       })

@@ -28,21 +28,38 @@ class MainView extends React.Component {
 
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
-    if (accessToken !== null) {
-      this.props.setUser({
-        user: localStorage.getItem('username')
-      });
+    let username = localStorage.getItem('username');
+
+    const { movies, user } = this.props;
+
+    if (accessToken && !movies.length) {
       this.getMovies(accessToken);
+    }
+
+    if (accessToken && !user) {
+      this.getUser(accessToken, username)
     }
   }
 
   getMovies(token) {
-    axios.get('https://myflix-nw.herokuapp.com/movies', {
+    axios.get('https://vercel-test-virid-two.vercel.app/movies', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
         this.props.setMovies(response.data);
       })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  getUser(token, username) {
+    axios.get(`https://vercel-test-virid-two.vercel.app/users/${username}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).then(response => {
+      console.log("profile response: ", response)
+      this.props.setUser({ user: response.data });
+    })
       .catch(function (error) {
         console.log(error);
       });
@@ -66,8 +83,21 @@ class MainView extends React.Component {
     window.open("/", "_self");
   }
 
+  isAuthed() {
+    let accessToken = localStorage.getItem('token');
+    let username = localStorage.getItem('username');
+
+    console.log("is authed: ", username, accessToken)
+
+    if (accessToken !== null && username !== null) return true;
+
+    return false;
+  }
+
   render() {
     let { movies, user } = this.props;
+
+    let isAuthed = this.isAuthed();
 
     return (
       <Router>
@@ -77,7 +107,7 @@ class MainView extends React.Component {
             exact
             path="/"
             render={() => {
-              if (!user)
+              if (!isAuthed)
                 return (
                   <Col>
                     <LoginView
@@ -94,7 +124,7 @@ class MainView extends React.Component {
           <Route
             path="/register"
             render={() => {
-              if (user) return <Redirect to="/" />;
+              if (isAuthed) return <Redirect to="/" />;
               return (
                 <Col lg={8} md={8}>
                   <RegistrationView />
@@ -104,9 +134,9 @@ class MainView extends React.Component {
           />
 
           <Route
-            path={`/users/${user.user}`}
+            path={`/users/:username`}
             render={({ history }) => {
-              if (!user.user) return <Redirect to="/" />;
+              if (!user.Username) return <Redirect to="/" />;
               return (
                 <Col>
                   <ProfileView
@@ -122,7 +152,7 @@ class MainView extends React.Component {
           <Route
             path="/movies/:movieId"
             render={({ match, history }) => {
-              if (!user)
+              if (!isAuthed)
                 return (
                   <Col>
                     <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
@@ -143,7 +173,7 @@ class MainView extends React.Component {
           <Route
             path="/directors/:name"
             render={({ match, history }) => {
-              if (!user)
+              if (!isAuthed)
                 return (
                   <Col>
                     <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
@@ -151,7 +181,7 @@ class MainView extends React.Component {
                 );
               if (movies.length === 0) return <div className="main-view" />;
               return (
-                <Col md={8}>
+                <Col md={8} >
                   <DirectorView
                     director={
                       movies.find((m) => m.Director.Name === match.params.name)
@@ -167,7 +197,7 @@ class MainView extends React.Component {
           <Route
             path="/genres/:name"
             render={({ match, history }) => {
-              if (!user)
+              if (!isAuthed)
                 return (
                   <Col>
                     <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />

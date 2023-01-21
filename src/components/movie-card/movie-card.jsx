@@ -9,8 +9,8 @@ export class MovieCard extends React.Component {
     const { movie } = this.props;
 
     return (
-      <Card style={{ marginTop: 10, marginBottom: 10 }} className="movie-cardstyle">
-        <Card.Img variant="top" src={movie.ImagePath} crossOrigin="Anonymous" />
+      <Card style={{ marginTop: 10 }} className="mb-3 mx-1">
+        <Card.Img variant="top" class="movie-cardstyle" src={movie.ImagePath} crossOrigin="Anonymous" />
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>
           <Card.Subtitle>{movie.Genre.Name}</Card.Subtitle>

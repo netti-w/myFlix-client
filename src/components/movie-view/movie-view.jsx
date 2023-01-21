@@ -16,7 +16,7 @@ export class MovieView extends React.Component {
       const Username = localStorage.getItem('username');
       const accessToken = localStorage.getItem('token');
 
-      axios.put(`https://myflix-nw.herokuapp.com/users/${Username}/movies/${movieId}`,
+      axios.put(`https://vercel-test-virid-two.vercel.app/users/${Username}/movies/${movieId}`,
         { headers: { Authorization: `Bearer ${accessToken}` } })
         .then((response) => {
           console.log(response);

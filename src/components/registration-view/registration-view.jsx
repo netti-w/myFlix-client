@@ -53,7 +53,7 @@ export function RegistrationView(props) {
     e.preventDefault();
     const isReq = validate();
     if (isReq) {
-      axios.post('https://myflix-nw.herokuapp.com/users/', {
+      axios.post('https://vercel-test-virid-two.vercel.app/users/', {
         Username: username,
         Password: password,
         Email: email,

@@ -20,7 +20,7 @@ export function ProfileView(props) {
   })
 
   const getUser = () => {
-    axios.get(`https://myflix-nw.herokuapp.com/users/${currentUser}`, {
+    axios.get(`https://vercel-test-virid-two.vercel.app/users/${currentUser}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
@@ -62,11 +62,17 @@ export function ProfileView(props) {
     return isReq;
   };
 
+  const hasBirthdayDate = () => {
+    if (!birthday) {
+      hasBirthdayDate = false
+    }
+  }
+
   const updateUser = (e) => {
     e.preventDefault();
     const isReq = validate();
     if (isReq) {
-      axios.put(`https://myflix-nw.herokuapp.com/users/${currentUser}`, {
+      axios.put(`https://vercel-test-virid-two.vercel.app/users/${currentUser}`, {
         Username: currentUser,
         Password: password,
         Email: email,
@@ -88,7 +94,7 @@ export function ProfileView(props) {
   };
 
   const deleteUser = () => {
-    axios.delete(`https://myflix-nw.herokuapp.com/users/${currentUser}`, {
+    axios.delete(`https://vercel-test-virid-two.vercel.app/users/${currentUser}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(() => {
@@ -101,7 +107,7 @@ export function ProfileView(props) {
 
 
   const handleMovieDelete = (movieId) => {
-    axios.delete(`https://myflix-nw.herokuapp.com/users/${currentUser}/movies/${movieId}`, {
+    axios.delete(`https://vercel-test-virid-two.vercel.app/users/${currentUser}/movies/${movieId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(() => {
@@ -156,7 +162,7 @@ export function ProfileView(props) {
                     <Form.Control className="form-control-sm" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email adress or a new one" />
                     {values.emailErr && <p>{values.emailErr}</p>}
                   </Form.Group>
-                  {user.Birthday == null && (
+                  {!user.Birthday && (
                     <Form.Group className="mb-3" controlId="formBirthday">
                       <Form.Label>Birthday:</Form.Label>
                       <Form.Control className="form-control-sm" type="date" value={birthday} onChange={e => setBirthday(e.target.value)} placeholder="Enter your birthday" />

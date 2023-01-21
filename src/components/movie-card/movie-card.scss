@@ -1,14 +1,17 @@
 .movie-cardstyle {
-    margin-bottom: 15px;
-
-    card {
+    img {
+        // margin-bottom: 5px;
+        height: 250px;
+        overflow: hidden;
         position: relative;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-
-        img {
-            height: 400px;
-        }
     }
 }
+
+// .card {
+//     max-height: 450px;
+//     width: auto;
+//     // padding-top: 50px;
+// }
